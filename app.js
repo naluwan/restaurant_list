@@ -14,7 +14,6 @@ app.use(express.static('public'))
 
 //routes setting
 app.get("/", (req, res) => {
-  console.log(restaurantList.results)
   res.render('index', { restaurants: restaurantList.results })
 })
 
@@ -24,8 +23,16 @@ app.get('/restaurants/:id', (req, res) => {
   res.render('show', { restaurant: restaurant })
 })
 
-
-
+app.get('/search', (req, res) => {
+  const keyword = req.query.keyword
+  if (!keyword) {
+    res.render('index', { restaurants: restaurantList.results, error: '餐廳名稱不可為空白，請重新輸入!' })
+  }
+  const restaurants = restaurantList.results.filter(restaurant => {
+    return restaurant.name.toLowerCase().includes(keyword.trim().toLowerCase())
+  })
+  res.render('index', { restaurants: restaurants, keyword: keyword })
+})
 
 
 // start and listen on the Express server
