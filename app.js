@@ -25,12 +25,23 @@ app.get('/restaurants/:id', (req, res) => {
 
 app.get('/search', (req, res) => {
   const keyword = req.query.keyword
+
+  // input不能為空白
   if (!keyword) {
     res.render('index', { restaurants: restaurantList.results, error: '餐廳名稱不可為空白，請重新輸入!' })
+    return
   }
+
   const restaurants = restaurantList.results.filter(restaurant => {
     return restaurant.name.toLowerCase().includes(keyword.trim().toLowerCase())
   })
+
+  // 找不到餐廳
+  if (restaurants.length === 0) {
+    res.render('index', { restaurants: restaurantList.results, error: '找不到所輸入的餐廳，請重新輸入!' })
+    return
+  }
+
   res.render('index', { restaurants: restaurants, keyword: keyword })
 })
 
