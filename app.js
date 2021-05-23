@@ -11,7 +11,7 @@ app.engine('handlebars', exphbs({ defaultLayout: 'main' }))
 app.set('view engine', 'handlebars')
 
 // setting mongodb connect
-mongoose.connect('mongodb://localhost/restaurnat-list')
+mongoose.connect('mongodb://localhost/restaurnat-list', { useNewUrlParser: true, useUnifiedTopology: true })
 const db = mongoose.connection
 
 db.on('error', () => {
@@ -28,6 +28,7 @@ app.use(express.static('public'))
 //routes setting
 app.get("/", (req, res) => {
   res.render('index', { restaurants: restaurantList.results })
+  console.log(restaurantList)
 })
 
 app.get('/restaurants/:id', (req, res) => {
