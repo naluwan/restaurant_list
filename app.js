@@ -6,6 +6,7 @@ const hbs = require('express-handlebars')
 const mongoose = require('mongoose')
 const restaurantList = require('./restaurant.json')
 const Restaurant = require('./models/restaurant')
+const bodyParser = require('body-parser')
 
 // setting template engine
 app.engine('hbs', hbs({ defaultLayout: 'main', extname: '.hbs' }))
@@ -25,6 +26,7 @@ db.once('open', () => {
 
 // setting static files
 app.use(express.static('public'))
+app.use(bodyParser.urlencoded({ extended: true }))
 
 //routes setting
 app.get("/", (req, res) => {
@@ -34,12 +36,34 @@ app.get("/", (req, res) => {
     .catch(error => console.log(error))
 })
 
+app.get('/restaurants/create', (req, res) => {
+  return res.render('create')
+})
+
 app.get('/restaurants/:id', (req, res) => {
   const id = req.params.id
   return Restaurant.findById(id)
     .lean()
     .then(restaurant => res.render('detail', { restaurant }))
     .catch(error => console.log(error))
+})
+
+app.post('/restaurants', (req, res) => {
+  const newRestaurant = req.body
+
+  Restaurant.create({
+    name: newRestaurant.name,
+    category: newRestaurant.category,
+    image: newRestaurant.image,
+    location: newRestaurant.location,
+    phone: newRestaurant.phone,
+    google_map: newRestaurant.google_map,
+    rating: newRestaurant.rating,
+    description: newRestaurant.description
+  })
+    .then(() => res.redirect('/'))
+    .catch(error => console.log(error))
+
 })
 
 app.get('/search', (req, res) => {
