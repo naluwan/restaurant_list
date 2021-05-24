@@ -9,6 +9,15 @@
           編輯
         </span>
       </a>
+
+      <form action="/restaurants/{{ restaurant._id }}/delete" method="post" style="display: inline;">
+        <button type="submit" style="border: none; background-color:white">
+          <span class="badge badge-pill badge-danger font-weight-normal">
+            <i class="fas fa-edit"></i>
+            刪除
+          </span>
+        </button>
+      </form>
     </div>
   </div>
 

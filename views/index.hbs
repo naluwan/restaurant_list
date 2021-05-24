@@ -26,35 +26,56 @@
     <div class="col-md-10 col-12 mx-auto">
       <div class="card-columns">
         {{#each restaurants}}
+
+
         <a href="/restaurants/{{this._id}}" class="text-secondary">
           <div class="card mb-3">
             <img class="card-img-top" src="{{this.image}}" alt="{{this.name}}">
             <div class="card-body p-3">
               <h6 class="card-title mb-1">{{this.name}}</h6>
         </a>
+
+
+
         <div class="restaurant-category mb-1">
           <i class="fas fa-utensils pr-2"></i>{{this.category}}
+          <span class="badge badge-pill badge-warning font-weight-normal">
+            {{this.rating}}
+            <i class="fas fa-star fa-xs"></i>
+          </span>
         </div>
-        <span class="badge badge-pill badge-warning font-weight-normal">
-          {{this.rating}}
-          <i class="fas fa-star fa-xs"></i>
-        </span>
-        <a href="/restaurants/{{ this._id }}">
-          <span class="badge badge-pill badge-info font-weight-normal">
-            <i class="fas fa-book-open"></i>
-            詳細資料
-          </span>
-        </a>
-        <a href="/restaurants/{{ this._id }}/edit">
-          <span class="badge badge-pill badge-secondary font-weight-normal">
-            <i class="fas fa-edit"></i>
-            編輯
-          </span>
-        </a>
+
+
+        <div class="d-flex justify-content-start">
+          <button type="button" style="border: none; background-color:white">
+            <a href="/restaurants/{{ this._id }}" style="text-decoration:none">
+              <span class="badge badge-pill badge-info font-weight-normal">
+                <i class="fas fa-book-open"></i>
+                詳細資料
+              </span>
+            </a>
+          </button>
+
+          <button type="button" style="border: none; background-color:white">
+            <a href="/restaurants/{{ this._id }}/edit" style="text-decoration:none">
+              <span class=" badge badge-pill badge-secondary font-weight-normal">
+                <i class="fas fa-edit"></i>
+                編輯
+              </span>
+            </a>
+          </button>
+
+          <form action="/restaurants/{{ this._id }}/delete" method="post" style="display:inline-block;">
+            <button type="submit" style="border: none; background-color:white">
+              <span class="badge badge-pill badge-danger font-weight-normal">
+                <i class="fas fa-trash-alt"></i>
+                刪除
+              </span>
+            </button>
+          </form>
+        </div>
       </div>
     </div>
     {{/each}}
   </div>
-</div>
-</div>
 </div>
