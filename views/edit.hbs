@@ -1,0 +1,60 @@
+<form action="/restaurants/{{ restaurant._id }}/edit" method="POST"
+  class="col-12 d-flex flex-column align-items-around mt-5 mb-5">
+  <div class="form-group col-6 align-self-center">
+    <label for="name">餐廳名稱：</label>
+    <input type="text" class="form-control" id="name" name="name" placeholder="請輸入餐廳名稱" value="{{ restaurant.name }}">
+  </div>
+  <div class="form-group col-6 align-self-center">
+    <label for="category">餐廳類別：</label>
+    <select name="category" required value="{{ restaurant.category }}">
+      <option value=" 0">--請選擇--</option>
+      <option value="日式料理" {{#is category '日式料理' }} selected {{/is}}>日式料理</option>
+      <option value="中東料理" {{#is category '中東料理' }} selected {{/is}}>中東料理</option>
+      <option value="義式餐廳" {{#is category '義式餐廳' }} selected {{/is}}>義式餐廳</option>
+      <option value="美式" {{#is category '美式' }} selected {{/is}}>美式</option>
+      <option value="酒吧" {{#is category '酒吧' }} cheselectedcked {{/is}}>酒吧</option>
+      <option value="咖啡" {{#is category '咖啡' }} selected {{/is}}>咖啡</option>
+    </select>
+  </div>
+  <div class="form-group col-6 align-self-center">
+    <label for="image">餐廳圖片：</label>
+    <input type="text" class="form-control" id="image" name="image" placeholder="請輸入圖片網址"
+      value="{{ restaurant.image }}">
+  </div>
+  <div class="form-group col-6 align-self-center">
+    <label for="location">餐廳地址：</label>
+    <input type="text" class="form-control" id="location" name="location" placeholder="請輸入餐廳地址"
+      value="{{ restaurant.location }}">
+  </div>
+  <div class="form-group col-6 align-self-center">
+    <label for="phone">餐廳電話：</label>
+    <input type="text" class="form-control" id="phone" name="phone" placeholder="請輸入餐廳電話"
+      value="{{ restaurant.phone }}">
+  </div>
+  <div class="form-group col-6 align-self-center">
+    <label for="google_map">餐廳地圖：</label>
+    <input type="text" class="form-control" id="google_map" name="google_map" placeholder="請輸入餐廳google地圖網址"
+      value="{{ restaurant.google_map }}">
+  </div>
+  <div class="form-group col-6 align-self-center">
+    <label for="rating">餐廳評分：</label>
+    <input type="text" class="form-control" id="rating" name="rating" placeholder="請輸入餐廳評分"
+      value="{{ restaurant.rating }}">
+  </div>
+  <div class="form-group col-6 align-self-center">
+    <label for="description">餐廳簡介：</label>
+    <textarea class="col-12" name="description" rows="2" placeholder="請輸入餐廳簡介"
+      required>{{ restaurant.description }}</textarea>
+  </div>
+
+  <div class="d-flex flex-row justify-content-center col-12">
+    <a href="/" class="" style="text-decoration:none; color:azure">
+      <button type="button" class="btn btn-secondary col-12">
+        返回
+      </button>
+    </a>
+
+    <button type="submit" class="btn btn-primary ml-2">儲存</button>
+  </div>
+
+</form>

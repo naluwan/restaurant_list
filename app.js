@@ -7,6 +7,8 @@ const mongoose = require('mongoose')
 const restaurantList = require('./restaurant.json')
 const Restaurant = require('./models/restaurant')
 const bodyParser = require('body-parser')
+const hbshelpers = require('handlebars-helpers')
+const multihelpers = hbshelpers()
 
 // setting template engine
 app.engine('hbs', hbs({ defaultLayout: 'main', extname: '.hbs' }))
@@ -48,6 +50,15 @@ app.get('/restaurants/:id', (req, res) => {
     .catch(error => console.log(error))
 })
 
+app.get('/restaurants/:id/edit', (req, res) => {
+  const id = req.params.id
+
+  return Restaurant.findById(id)
+    .lean()
+    .then(restaurant => res.render('edit', { restaurant, category: restaurant.category }))
+    .catch(error => console.log(error))
+})
+
 app.post('/restaurants', (req, res) => {
   const newRestaurant = req.body
 
@@ -64,6 +75,24 @@ app.post('/restaurants', (req, res) => {
     .then(() => res.redirect('/'))
     .catch(error => console.log(error))
 
+})
+
+app.post('/restaurants/:id/edit', (req, res) => {
+  const id = req.params.id
+  const newRestaurant = req.body
+  return Restaurant.findById(id)
+    .then(restaurant => {
+      restaurant.name = newRestaurant.name,
+        restaurant.category = newRestaurant.category,
+        restaurant.image = newRestaurant.image,
+        restaurant.location = newRestaurant.location,
+        restaurant.phone = newRestaurant.phone,
+        restaurant.google_map = newRestaurant.google_map,
+        restaurant.rating = newRestaurant.rating,
+        restaurant.description = newRestaurant.description
+      return restaurant.save()
+    }).then(() => res.redirect(`/restaurants/${id}`))
+    .catch(error => console.log(error))
 })
 
 app.get('/search', (req, res) => {
