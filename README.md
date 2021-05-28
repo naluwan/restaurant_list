@@ -3,10 +3,13 @@ A simple restaurant website built with Node.js and Express
 
 # Features
 * Find your favorite restaurant
-* Search restaurant by name
+* Search restaurant by name or category
 * Show the search error
 * Show information of the restaurant
 * Click **_我的餐廳清單_** and back to home page
+* Creat new restaurant
+* Edit restaurant information
+* Delete restaurant information
 
 ![image](restaurant.png)
 
@@ -18,6 +21,10 @@ $ git clone https://github.com/naluwan/restaurant_list.git
 Install by npm
 ```
 $ npm install
+```
+Seeds
+```
+$ npm run seed
 ```
 Execute
 ```
@@ -35,6 +42,8 @@ http://localhost:3000
 * Node.js: 10.24.1
 * Express: 4.17.1
 * Express-Handlebars: 5.3.2
-
+* handlebars-helpers: 0.10.0
+* mongoose: 5.12.10
+ 
 # Author
 NaLuWan 簡碩亨
