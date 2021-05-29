@@ -10,6 +10,7 @@ A simple restaurant website built with Node.js and Express
 * Creat new restaurant
 * Edit restaurant information
 * Delete restaurant information
+* Show alert of delete restaurant
 
 ![image](restaurant.png)
 
