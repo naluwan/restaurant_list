@@ -4,7 +4,6 @@ const app = express()
 const port = 3000
 const hbs = require('express-handlebars')
 const mongoose = require('mongoose')
-const restaurantList = require('./restaurant.json')
 const Restaurant = require('./models/restaurant')
 const bodyParser = require('body-parser')
 const hbshelpers = require('handlebars-helpers')
@@ -31,7 +30,7 @@ app.use(express.static('public'))
 app.use(bodyParser.urlencoded({ extended: true }))
 
 //routes setting
-app.get("/", (req, res) => {
+app.get('/', (req, res) => {
   Restaurant.find()
     .lean()
     .then(restaurants => res.render('index', { restaurants }))
@@ -82,14 +81,14 @@ app.post('/restaurants/:id/edit', (req, res) => {
   const newRestaurant = req.body
   return Restaurant.findById(id)
     .then(restaurant => {
-      restaurant.name = newRestaurant.name,
-        restaurant.category = newRestaurant.category,
-        restaurant.image = newRestaurant.image,
-        restaurant.location = newRestaurant.location,
-        restaurant.phone = newRestaurant.phone,
-        restaurant.google_map = newRestaurant.google_map,
-        restaurant.rating = newRestaurant.rating,
-        restaurant.description = newRestaurant.description
+      restaurant.name = newRestaurant.name
+      restaurant.category = newRestaurant.category
+      restaurant.image = newRestaurant.image
+      restaurant.location = newRestaurant.location
+      restaurant.phone = newRestaurant.phone
+      restaurant.google_map = newRestaurant.google_map
+      restaurant.rating = newRestaurant.rating
+      restaurant.description = newRestaurant.description
       return restaurant.save()
     }).then(() => res.redirect(`/restaurants/${id}`))
     .catch(error => console.log(error))
@@ -110,8 +109,8 @@ app.get('/search', (req, res) => {
 
   Restaurant.find({
     "$or": [
-      { name: { $regex: `${keyword}`, $options: `$i` } },
-      { category: { $regex: `${keyword}`, $options: `$i` } }
+      { name: { $regex: `${keyword}`, $options: '$i' } },
+      { category: { $regex: `${keyword}`, $options: '$i' } }
     ]
   })
     .lean()
