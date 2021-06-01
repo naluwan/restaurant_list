@@ -40,7 +40,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
-          <form action="/restaurants/{{ restaurant._id }}/delete" method="post" style="display:inline-block;">
+          <form action="/restaurants/{{ restaurant._id }}?_method=DELETE" method="post" style="display:inline-block;">
             <button type="submit" class="btn btn-danger">確定</button>
           </form>
         </div>

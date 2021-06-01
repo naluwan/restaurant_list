@@ -29,9 +29,8 @@
 <div class="container mt-5">
   <div class="row">
     <div class="col-md-10 col-12 mx-auto">
-      <div class="card-columns">
+      <div class="card-columns" id="data-panel">
         {{#each restaurants}}
-
 
         <a href="/restaurants/{{this._id}}" class="text-secondary">
           <div class="card mb-3">
@@ -39,8 +38,6 @@
             <div class="card-body p-3">
               <h6 class="card-title mb-1 restaurant-name">{{this.name}}</h6>
         </a>
-
-
 
         <div class="restaurant-category mb-1">
           <i class="fas fa-utensils pr-2"></i>{{this.category}}
@@ -50,61 +47,53 @@
           </span>
         </div>
 
-
-        <div class="d-flex justify-content-start">
-          <button type="button" style="border: none; background-color:white">
-            <a href="/restaurants/{{ this._id }}" style="text-decoration:none">
-              <span class="badge badge-pill badge-info font-weight-normal">
-                <i class="fas fa-book-open"></i>
-                詳細資料
-              </span>
+        <div class="d-flex justify-content-between">
+          <button type="button" style="border: none;" class="btn btn-info btn-sm">
+            <a href="/restaurants/{{ this._id }}" style="text-decoration:none; color:white">
+              <i class="fas fa-book-open"></i>
+              詳細資料
             </a>
           </button>
 
-          <button type="button" style="border: none; background-color:white">
-            <a href="/restaurants/{{ this._id }}/edit" style="text-decoration:none">
-              <span class=" badge badge-pill badge-secondary font-weight-normal">
-                <i class="fas fa-edit"></i>
-                編輯
-              </span>
+          <button type="button" style="border: none;" class="btn btn-secondary btn-sm">
+            <a href="/restaurants/{{ this._id }}/edit" style="text-decoration:none; color:white">
+              <i class="fas fa-edit"></i>
+              編輯
             </a>
           </button>
 
-
-          <button type="button" class="btn-danger" data-toggle="modal" data-target="#restaurantModal"
-            style="border: none; background-color:white" data-id="{{ this_id }}">
-            <span class="badge badge-pill badge-danger font-weight-normal">
-              <i class="fas fa-trash-alt"></i>
-              刪除
-            </span>
+          <button type="button" class="btn btn-danger btn-delete btn-sm" data-toggle="modal"
+            data-target="#restaurantModal" style="border: none;" data-id="{{ this._id }}" data-name="{{ this.name }}">
+            <i class="fas fa-trash-alt"></i>
+            刪除
           </button>
-
-          <!-- Modal -->
-          <div class="modal fade" id="restaurantModal" tabindex="-1" role="dialog"
-            aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModalScrollableTitle">刪除餐廳</h5>
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                  </button>
-                </div>
-                <div class="modal-body">
-                  確定要刪除「{{ this.name }}」?
-                </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
-                  <form action="/restaurants/{{ this._id }}/delete" method="post" style="display:inline-block;">
-                    <button type="submit" class="btn btn-danger">確定</button>
-                  </form>
-                </div>
-              </div>
-            </div>
-          </div>
         </div>
       </div>
     </div>
     {{/each}}
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="restaurantModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalScrollableTitle">刪除餐廳</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        確定要刪除「{{ this.name }}」?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+        <form action="/restaurants/{{ this._id }}" method="post" style="display:inline-block;" id="confirm-form">
+          <button type="submit" class="btn btn-danger">確定</button>
+        </form>
+      </div>
+    </div>
   </div>
 </div>
