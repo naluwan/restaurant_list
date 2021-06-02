@@ -10,6 +10,8 @@ const hbshelpers = require('handlebars-helpers')
 const multihelpers = hbshelpers()
 const methodOverride = require('method-override')
 
+const route = require('./routes')
+
 // setting template engine
 app.engine('hbs', hbs({ defaultLayout: 'main', extname: '.hbs' }))
 app.set('view engine', 'hbs')
@@ -30,98 +32,7 @@ db.once('open', () => {
 app.use(express.static('public'))
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(methodOverride('_method'))
-
-//routes setting
-app.get('/', (req, res) => {
-  Restaurant.find()
-    .lean()
-    .then(restaurants => res.render('index', { restaurants }))
-    .catch(error => console.log(error))
-})
-
-app.get('/restaurants/create', (req, res) => {
-  return res.render('create')
-})
-
-app.get('/restaurants/:id', (req, res) => {
-  const id = req.params.id
-  return Restaurant.findById(id)
-    .lean()
-    .then(restaurant => res.render('detail', { restaurant }))
-    .catch(error => console.log(error))
-})
-
-app.get('/restaurants/:id/edit', (req, res) => {
-  const id = req.params.id
-
-  return Restaurant.findById(id)
-    .lean()
-    .then(restaurant => res.render('edit', { restaurant, category: restaurant.category }))
-    .catch(error => console.log(error))
-})
-
-app.post('/restaurants', (req, res) => {
-  const newRestaurant = req.body
-
-  Restaurant.create({
-    name: newRestaurant.name,
-    category: newRestaurant.category,
-    image: newRestaurant.image,
-    location: newRestaurant.location,
-    phone: newRestaurant.phone,
-    google_map: newRestaurant.google_map,
-    rating: newRestaurant.rating,
-    description: newRestaurant.description
-  })
-    .then(() => res.redirect('/'))
-    .catch(error => console.log(error))
-
-})
-
-app.put('/restaurants/:id', (req, res) => {
-  const id = req.params.id
-  const newRestaurant = req.body
-  return Restaurant.findById(id)
-    .then(restaurant => {
-      restaurant.name = newRestaurant.name
-      restaurant.category = newRestaurant.category
-      restaurant.image = newRestaurant.image
-      restaurant.location = newRestaurant.location
-      restaurant.phone = newRestaurant.phone
-      restaurant.google_map = newRestaurant.google_map
-      restaurant.rating = newRestaurant.rating
-      restaurant.description = newRestaurant.description
-      return restaurant.save()
-    }).then(() => res.redirect(`/restaurants/${id}`))
-    .catch(error => console.log(error))
-})
-
-app.delete('/restaurants/:id', (req, res) => {
-  const id = req.params.id
-
-  return Restaurant.findById(id)
-    .then(restaurant => restaurant.remove())
-    .then(() => res.redirect('/'))
-    .catch(error => console.log(error))
-})
-
-app.get('/search', (req, res) => {
-  let keyword = req.query.keyword
-  let errorMsg = ''
-
-  Restaurant.find({
-    "$or": [
-      { name: { $regex: `${keyword}`, $options: '$i' } },
-      { category: { $regex: `${keyword}`, $options: '$i' } }
-    ]
-  })
-    .lean()
-    .then(restaurants => {
-      if (restaurants.length === 0) errorMsg = '找不到您要的餐廳，請重新輸入!'
-      res.render('index', { restaurants, keyword, errorMsg })
-    })
-    .catch(error => console.log(error))
-})
+app.use(route)
 
 
 // start and listen on the Express server
