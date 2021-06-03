@@ -11,8 +11,9 @@ A simple restaurant website built with Node.js and Express
 * Edit restaurant information
 * Delete restaurant information
 * Show alert of delete restaurant
+* Sort restaurant by name, category, location or rating
 
-![image](restaurant.png)
+![image](restaurant-1.png)
 
 # Getting Started
 Clone respository to your local computer
@@ -45,6 +46,7 @@ http://localhost:3000
 * Express-Handlebars: 5.3.2
 * handlebars-helpers: 0.10.0
 * mongoose: 5.12.10
+* method-override: 3.0.0
  
 # Author
 NaLuWan 簡碩亨
