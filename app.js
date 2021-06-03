@@ -9,7 +9,7 @@ const hbshelpers = require('handlebars-helpers')
 const multihelpers = hbshelpers()
 const methodOverride = require('method-override')
 
-const route = require('./routes')
+const routes = require('./routes')
 require('./config/mongoose')
 
 // setting template engine
@@ -21,7 +21,7 @@ app.use(express.static('public'))
 
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(methodOverride('_method'))
-app.use(route)
+app.use(routes)
 
 // start and listen on the Express server
 app.listen(port, () => {
