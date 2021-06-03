@@ -1,76 +1,98 @@
 <!-- search bar -->
-<div class="container search-bar">
-  <div class="search-bar-outer">
-    <div class="search-bar-inner">
-      <form action="/search" class="needs-validation" novalidate>
-        <h4 class=" mb-2">尋找餐廳：</h4>
-        <div class="input-group">
-          <input type="text" name="keyword" class="form-control input-keyword" placeholder="輸入餐廳名稱、分類名稱"
-            value="{{keyword}}" required>
-          <div class="input-group-append">
-            <button class="btn btn-major" type="submit" id="search-button"><i class="fas fa-search"></i></button>
-          </div>
-          <div class="invalid-feedback">
-            請輸入餐廳名稱或分類名稱!
-          </div>
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-md-10 col-12 mx-auto">
+      <div class="row d-flex justify-content-between">
+        <div class="col-12 col-sm-6 col-lg-4">
+          <form action="/restaurants/search" class="needs-validation" novalidate>
+            <div class="input-group">
+              <input type="search" name="keyword" class="form-control input-keyword" placeholder="輸入餐廳名稱、分類名稱"
+                value="{{keyword}}" required>
+              <div class="input-group-append">
+                <button class="btn btn-major" type="submit" id="search-button"><i class="fas fa-search"></i></button>
+              </div>
+              <div class="invalid-feedback">
+                請輸入餐廳名稱或分類名稱!
+              </div>
+            </div>
+            {{!-- search error --}}
+            <div class="error" style="color:#DC3545">
+              {{#if errorMsg}}
+              <small>{{errorMsg}}</small>
+              {{/if}}
+            </div>
+          </form>
         </div>
-        {{!-- search error --}}
-        <div class="error" style="color:#DC3545">
-          {{#if errorMsg}}
-          <small>{{errorMsg}}</small>
-          {{/if}}
-        </div>
-      </form>
+
+        <form class="d-flex pr-3" name="sort-form" action="/restaurants/sort" method="GET">
+          <div class="form-group sort-dropdown align-self-center">
+            <select name="sortMethod" class="form-control btn-secondary" id='inputType' onchange="submit()"
+              style="cursor: pointer;">
+              <option value="_id" selected hidden>選擇排序</option>
+              <option value="name" {{#if (eq sortMethod 'name' )}} selected {{/if}}>名稱</option>
+              <option value="category" {{#if (eq sortMethod 'category' )}} selected {{/if}}>類別</option>
+              <option value="location" {{#if (eq sortMethod 'location' )}} selected {{/if}}>地區</option>
+              <option value="-rating" {{#if (eq sortMethod '-rating' )}} selected {{/if}}>評價(高到低)</option>
+            </select>
+          </div>
+        </form>
+      </div>
     </div>
   </div>
 </div>
+
 
 <!-- restaurant list -->
 <div class="container mt-5">
   <div class="row">
     <div class="col-md-10 col-12 mx-auto">
-      <div class="card-columns" id="data-panel">
+      <div class="row" id="data-panel">
         {{#each restaurants}}
-
-        <a href="/restaurants/{{this._id}}" class="text-secondary">
+        <div class="col-12 col-sm-6 col-lg-4">
           <div class="card mb-3">
-            <img class="card-img-top" src="{{this.image}}" alt="{{this.name}}">
+            <a href="/restaurants/{{this._id}}" class="text-secondary">
+              <img class="card-img-top" src="{{this.image}}" alt="{{this.name}}">
+            </a>
             <div class="card-body p-3">
-              <h6 class="card-title mb-1 restaurant-name">{{this.name}}</h6>
-        </a>
+              <a href="/restaurants/{{this._id}}" class="text-secondary">
+                <h6 class="card-title mb-1 restaurant-name">{{this.name}}</h6>
+              </a>
+              <div class="restaurant-category mb-1">
+                <i class="fas fa-utensils pr-2"></i>{{this.category}}
+                <span class="badge badge-pill badge-warning font-weight-normal">
+                  {{this.rating}}
+                  <i class="fas fa-star fa-xs"></i>
+                </span>
+              </div>
 
-        <div class="restaurant-category mb-1">
-          <i class="fas fa-utensils pr-2"></i>{{this.category}}
-          <span class="badge badge-pill badge-warning font-weight-normal">
-            {{this.rating}}
-            <i class="fas fa-star fa-xs"></i>
-          </span>
+              <div class="d-flex justify-content-between mt-3">
+                <button type="button" style="border: none;" class="btn btn-info btn-sm">
+                  <a href="/restaurants/{{ this._id }}" style="text-decoration:none; color:white">
+                    <i class="fas fa-book-open"></i>
+                    詳細資料
+                  </a>
+                </button>
+
+                <button type="button" style="border: none;" class="btn btn-secondary btn-sm">
+                  <a href="/restaurants/{{ this._id }}/edit" style="text-decoration:none; color:white">
+                    <i class="fas fa-edit"></i>
+                    編輯
+                  </a>
+                </button>
+
+                <button type="button" class="btn btn-danger btn-delete btn-sm" data-toggle="modal"
+                  data-target="#restaurantModal" style="border: none;" data-id="{{ this._id }}"
+                  data-name="{{ this.name }}">
+                  <i class="fas fa-trash-alt"></i>
+                  刪除
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
-
-        <div class="d-flex justify-content-between">
-          <button type="button" style="border: none;" class="btn btn-info btn-sm">
-            <a href="/restaurants/{{ this._id }}" style="text-decoration:none; color:white">
-              <i class="fas fa-book-open"></i>
-              詳細資料
-            </a>
-          </button>
-
-          <button type="button" style="border: none;" class="btn btn-secondary btn-sm">
-            <a href="/restaurants/{{ this._id }}/edit" style="text-decoration:none; color:white">
-              <i class="fas fa-edit"></i>
-              編輯
-            </a>
-          </button>
-
-          <button type="button" class="btn btn-danger btn-delete btn-sm" data-toggle="modal"
-            data-target="#restaurantModal" style="border: none;" data-id="{{ this._id }}" data-name="{{ this.name }}">
-            <i class="fas fa-trash-alt"></i>
-            刪除
-          </button>
-        </div>
+        {{/each}}
       </div>
     </div>
-    {{/each}}
   </div>
 </div>
 
