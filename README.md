@@ -7,7 +7,7 @@ A simple restaurant website built with Node.js and Express
 * Show the search error
 * Show information of the restaurant
 * Click **_我的餐廳清單_** and back to home page
-* Creat new restaurant
+* Create new restaurant
 * Edit restaurant information
 * Delete restaurant information
 * Show alert of delete restaurant
@@ -16,7 +16,7 @@ A simple restaurant website built with Node.js and Express
 ![image](restaurant-1.png)
 
 # Getting Started
-Clone respository to your local computer
+Clone repository to your local computer
 ```
 $ git clone https://github.com/naluwan/restaurant_list.git
 ```
