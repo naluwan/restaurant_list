@@ -1,5 +1,6 @@
 // require packages used in the project
 const express = require("express")
+const session = require('express-session')
 const app = express()
 const PORT = 3000
 const hbs = require('express-handlebars')
@@ -16,8 +17,13 @@ require('./config/mongoose')
 app.engine('hbs', hbs({ defaultLayout: 'main', extname: '.hbs' }))
 app.set('view engine', 'hbs')
 
-// setting static files
+// middleware
 app.use(express.static('public'))
+app.use(session({
+  secret: 'ThisIsMySecret',
+  resave: false,
+  saveUninitialized: true
+}))
 
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(methodOverride('_method'))
