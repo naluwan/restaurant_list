@@ -3,7 +3,7 @@
   <div class="row">
     <div class="col-md-10 col-12 mx-auto">
       <div class="row d-flex justify-content-between">
-        <div class="col-12 col-sm-6 col-lg-4">
+        <div class="col-6 col-sm-6 col-lg-4">
           <form action="/restaurants/search" class="needs-validation" novalidate>
             <div class="input-group">
               <input type="search" name="keyword" class="form-control input-keyword" placeholder="輸入餐廳名稱、分類名稱"
@@ -24,18 +24,20 @@
           </form>
         </div>
 
-        <form class="d-flex pr-3" name="sort-form" action="/restaurants/sort" method="GET">
-          <div class="form-group sort-dropdown align-self-center">
-            <select name="sortMethod" class="form-control btn-secondary" id='inputType' onchange="submit()"
-              style="cursor: pointer;">
-              <option value="_id" selected hidden>選擇排序</option>
-              <option value="name" {{#if (eq sortMethod 'name' )}} selected {{/if}}>名稱</option>
-              <option value="category" {{#if (eq sortMethod 'category' )}} selected {{/if}}>類別</option>
-              <option value="location" {{#if (eq sortMethod 'location' )}} selected {{/if}}>地區</option>
-              <option value="-rating" {{#if (eq sortMethod '-rating' )}} selected {{/if}}>評價(高到低)</option>
-            </select>
-          </div>
-        </form>
+        <div class="col-6 col-sm-6 col-lg-4">
+          <form class="d-flex pr-3" name="sort-form" action="/restaurants/sort" method="GET">
+            <div class="form-group sort-dropdown align-self-center">
+              <select name="sortMethod" class="form-control btn-secondary" id='inputType' onchange="submit()"
+                style="cursor: pointer;">
+                <option value="_id" selected hidden>選擇排序</option>
+                <option value="name" {{#if (eq sortMethod 'name' )}} selected {{/if}}>名稱</option>
+                <option value="category" {{#if (eq sortMethod 'category' )}} selected {{/if}}>類別</option>
+                <option value="location" {{#if (eq sortMethod 'location' )}} selected {{/if}}>地區</option>
+                <option value="-rating" {{#if (eq sortMethod '-rating' )}} selected {{/if}}>評價(高到低)</option>
+              </select>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
   </div>

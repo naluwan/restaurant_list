@@ -1,7 +1,7 @@
 // require packages used in the project
 const express = require("express")
 const app = express()
-const port = 3000
+const PORT = 3000
 const hbs = require('express-handlebars')
 const Restaurant = require('./models/restaurant')
 const bodyParser = require('body-parser')
@@ -24,6 +24,6 @@ app.use(methodOverride('_method'))
 app.use(routes)
 
 // start and listen on the Express server
-app.listen(port, () => {
-  console.log(`Express is running on localhost:${port}`)
+app.listen(PORT, () => {
+  console.log(`Express is running on localhost:${PORT}`)
 })
