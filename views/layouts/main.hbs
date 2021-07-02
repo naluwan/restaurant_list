@@ -19,7 +19,7 @@
 
   <header>
     <!-- navigation -->
-    <nav class="navbar navbar-light bg-light">
+    <nav class="navbar navbar-dark bg-dark ">
       <div class="container">
         <a class="navbar-brand" href="/">
           <img src="https://assets-lighthouse.s3.amazonaws.com/uploads/image/file/6227/restaurant-list-logo.png"
@@ -31,15 +31,17 @@
         </a>
         {{#if isAuthenticated}}
         <div>
-          <a href="/restaurants/create" class="btn btn-dark mx-2">新增</a>
-          <a href="/users/logout" class="btn btn-outline-dark">Logout</a>
+          <a href="/restaurants/create" class="btn btn-light mx-2">新增</a>
+          <a href="/users/logout" class="btn btn-outline-light">Logout</a>
           {{else}}
-          <a href="/users/login" class="btn btn-outline-dark">Login</a>
+          <a href="/users/login" class="btn btn-outline-light">Login</a>
         </div>
         {{/if}}
       </div>
     </nav>
-    <div class="banner">123</div>
+    {{#if isAuthenticated}}
+    <div class="banner"></div>
+    {{/if}}
   </header>
 
 
