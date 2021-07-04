@@ -2,7 +2,7 @@
 const express = require("express")
 const session = require('express-session')
 const app = express()
-const PORT = 3000
+
 const hbs = require('express-handlebars')
 const Restaurant = require('./models/restaurant')
 const bodyParser = require('body-parser')
@@ -11,6 +11,11 @@ const multihelpers = hbshelpers()
 const methodOverride = require('method-override')
 const flash = require('connect-flash')
 
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config()
+}
+
+const PORT = process.env.PORT
 const routes = require('./routes')
 const usePassport = require('./config/passport')
 require('./config/mongoose')
@@ -22,7 +27,7 @@ app.set('view engine', 'hbs')
 // middleware
 app.use(express.static('public'))
 app.use(session({
-  secret: 'ThisIsMySecret',
+  secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: true
 }))
