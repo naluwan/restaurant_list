@@ -35,16 +35,6 @@ router.get('/create', (req, res) => {
   return res.render('create')
 })
 
-router.get('/:id', (req, res) => {
-  const userId = req.user._id
-  const _id = req.params.id
-
-  return Restaurant.findOne({ _id, userId })
-    .lean()
-    .then(restaurant => res.render('detail', { restaurant }))
-    .catch(error => console.log(error))
-})
-
 router.get('/:id/edit', (req, res) => {
   const userId = req.user._id
   const _id = req.params.id
@@ -52,6 +42,16 @@ router.get('/:id/edit', (req, res) => {
   return Restaurant.findOne({ _id, userId })
     .lean()
     .then(restaurant => res.render('edit', { restaurant, category: restaurant.category }))
+    .catch(error => console.log(error))
+})
+
+router.get('/:id', (req, res) => {
+  const userId = req.user._id
+  const _id = req.params.id
+
+  return Restaurant.findOne({ _id, userId })
+    .lean()
+    .then(restaurant => res.render('detail', { restaurant }))
     .catch(error => console.log(error))
 })
 
